@@ -95,9 +95,7 @@ bool DarcyTransportCorr::evalInt (LocalIntegral& elmInt, const FiniteElement& fe
 
   for (size_t i = 1; i <= fe.N.size(); ++i) {
     for (int d = 1; d <= nsd; ++d) {
-      double transport_term = 0.0;
-      for (int d2 = 1; d2 <= nsd; ++d2)
-        transport_term += (f - dCdt) * (dC[d2-1]*fe.N(i) + C * fe.dNdX(i,d2));
+      double transport_term = (f - dCdt) * (fe.N(i) * dC[d-1] + C * fe.dNdX(i,d));
       elMat.b[2]((i-1)*nsd + d) += transport_term * fe.detJxW;
     }
   }

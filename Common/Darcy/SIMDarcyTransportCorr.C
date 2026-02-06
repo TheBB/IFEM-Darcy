@@ -94,7 +94,7 @@ bool SIMDarcyTransportCorr<Dim>::parse (const tinyxml2::XMLElement* elem)
           IFEM::cout << " " << input << std::endl;
         drc.setInputSource(std::make_unique<EvalFunction>(input));
       } else
-        drc.setObservedConcentration(std::unique_ptr<RealFunc>(utl::parseRealFunc(input)));
+        drc.setInputSource(std::unique_ptr<RealFunc>(utl::parseRealFunc(input)));
      } else if (!strcasecmp(child->Value(),"input_velocity")) {
       std::string type;
       utl::getAttribute(child,"type",type);
@@ -111,7 +111,7 @@ bool SIMDarcyTransportCorr<Dim>::parse (const tinyxml2::XMLElement* elem)
        utl::getAttribute(child, "alpha", alpha);
        utl::getAttribute(child, "beta", beta);
        drc.setMassPenaltyParam(alpha);
-       drc.setTransportPenaltyParam(alpha);
+       drc.setTransportPenaltyParam(beta);
      } else if (!strcasecmp(child->Value(),"constrain_integrated_multiplier")) {
       constrainIntegratedLag = true;
       IFEM::cout << "\tConstraining integrated multiplier";
